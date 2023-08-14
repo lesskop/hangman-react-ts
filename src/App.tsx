@@ -4,8 +4,10 @@ import Header from "./components/Header";
 import Drawing from "./components/Drawing";
 import Word from "./components/Word";
 import Keyboard from "./components/Keyboard";
+import FinalMessage from "./components/FinalMessage";
 
 const App = () => {
+  const [playable, setPlayable] = useState<boolean>(true);
   const [word, setWord] = useState<string>(getRandomWord());
   const [guessedLetters, setGuessedLetters] = useState<Array<string>>([]);
 
@@ -15,6 +17,11 @@ const App = () => {
   const incorrectGuessedLetters = guessedLetters.filter(
     (letter) => !word.includes(letter),
   );
+
+  const lost: boolean = incorrectGuessedLetters.length >= 6;
+  const won: boolean = word
+    .split("")
+    .every((letter) => guessedLetters.includes(letter));
 
   const addGuessedLetter = useCallback((letter: string) => {
     setGuessedLetters((currentLetters) => {
@@ -36,12 +43,30 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    document.addEventListener("keypress", keyboardHandler);
+    if (playable) {
+      document.addEventListener("keypress", keyboardHandler);
+    } else {
+      document.removeEventListener("keypress", keyboardHandler);
+    }
 
     return () => {
       document.removeEventListener("keypress", keyboardHandler);
     };
-  }, [keyboardHandler]);
+  }, [playable, keyboardHandler]);
+
+  useEffect(() => {
+    if (won || lost) {
+      setPlayable(false);
+    } else {
+      setPlayable(true);
+    }
+  }, [won, lost]);
+
+  const playAgain = () => {
+    setPlayable(true);
+    setGuessedLetters([]);
+    setWord(getRandomWord());
+  };
 
   return (
     <div className="app flex flex-col items-center px-1">
@@ -53,6 +78,9 @@ const App = () => {
         incorrectGuessedLetters={incorrectGuessedLetters}
         addGuessedLetter={addGuessedLetter}
       />
+      {(won || lost) && (
+        <FinalMessage word={word} won={won} lost={lost} playAgain={playAgain} />
+      )}
     </div>
   );
 };
