@@ -34,7 +34,7 @@ const App = () => {
   const keyboardHandler = useCallback((e: KeyboardEvent) => {
     const key = e.key.toLowerCase();
 
-    if (!key.match(/^[а-яё]$/)) return;
+    if (!key.match(/^[а-я]$/)) return;
 
     if (guessedLetters.includes(key)) return;
 

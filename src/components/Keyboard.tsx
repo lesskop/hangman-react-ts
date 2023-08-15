@@ -5,7 +5,6 @@ const KEYS: Array<string> = [
   "Г",
   "Д",
   "Е",
-  "Ё",
   "Ж",
   "З",
   "И",
@@ -46,7 +45,7 @@ const Keyboard = ({
   addGuessedLetter: addLetter,
 }: Props) => {
   return (
-    <div className="grid grid-cols-7 gap-1 sm:grid-cols-12 sm:gap-2">
+    <div className="grid grid-cols-8 gap-1 sm:grid-cols-12 sm:gap-2">
       {KEYS.map((key) => {
         const lowerCaseKey = key.toLowerCase();
         const isCorrect = correctLetters.includes(lowerCaseKey);
@@ -56,9 +55,9 @@ const Keyboard = ({
           <button
             className={`border-2 border-black p-1 text-2xl font-bold  sm:text-3xl md:p-2 md:text-4xl lg:p-3 lg:text-5xl ${
               isCorrect
-                ? "bg-green-700 text-white"
+                ? "bg-green-700 text-white cursor-not-allowed"
                 : isIncorrect
-                ? "bg-red-700 text-white"
+                ? "bg-red-700 text-white cursor-not-allowed"
                 : "hover:bg-black hover:text-white"
             }`}
             key={key}
