@@ -2,6 +2,18 @@
 
 Игра "Виселица" на React, TypeScript и Tailwind CSS. 
 
+## Демонстрация
+
+![gameplay](demo/gameplay.png)
+
+Победа
+
+![win](demo/win.png)
+
+Проигрыш
+
+![lose](demo/lose.png)
+
 ## Замечания
 
 [Список русских существительных](other/russian_nouns.txt) в единственном числе был взят [здесь.](https://github.com/Harrix/Russian-Nouns/blob/main/dist/russian_nouns.txt)
